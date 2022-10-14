@@ -1,0 +1,8 @@
+# ------------------------------------------------------------------------------
+# Scratch Space - add your prototype script code here
+
+# TODO: Modify this function to suit your needs, then reload!
+define-command -override quick-dev-hello-world \
+-docstring 'example quick-dev command' %{
+    echo 'hello world!'
+}
