@@ -11,6 +11,25 @@ TODO:
 - [ ] Include examples of how to make different kakscript constructs reloadable
   for easy reference.
 
+## Commands
+
+`quick-dev-create-scratch-file`: create the quick-dev scratch file if it doesn't
+yet exist
+- This includes some example code & reference links to get you started.
+
+`quick-dev-reset-scratch-file`: delete an existing quick-dev scratch file and
+recreate it
+
+`quick-dev-edit`: edit the quick-dev scratch file
+
+`quick-dev-reload`: reload the quick-dev scratch file
+
+`quick-dev-register-default-mappings`: reload the quick-dev scratch file
+- `q` (user mode): enter quick-dev mode
+  - `e` (quick-dev): edit quick-dev script
+  - `r` (quick-dev): reload quick-dev script
+  - `R` (quick-dev): reset quick-dev script (!destructive!)
+
 ## Example Usage
 
 (Assuming default mappings...)
@@ -52,25 +71,6 @@ This is meant be an instant feedback cycle for quick prototyping. Once you're
 happy with the new functionality, consider pulling it out of the quick dev
 scratch file and into an actual plugin you can share.
 
-## Commands
-
-`quick-dev-create-scratch-file`: create the quick-dev scratch file if it doesn't
-yet exist
-- This includes some example code & reference links to get you started.
-
-`quick-dev-reset-scratch-file`: delete an existing quick-dev scratch file and
-recreate it
-
-`quick-dev-edit`: edit the quick-dev scratch file
-
-`quick-dev-reload`: reload the quick-dev scratch file
-
-`quick-dev-register-default-mappings`: reload the quick-dev scratch file
-- `q` (user mode): enter quick-dev mode
-  - `e` (quick-dev): edit quick-dev script
-  - `r` (quick-dev): reload quick-dev script
-  - `R` (quick-dev): reset quick-dev script (!destructive!)
-
 ## Installation
 
 With `plug.kak`:
@@ -97,7 +97,7 @@ Manual:
 > directory. You could modify the source fairly easily to accomodate a different
 > setup if needed.
 
-## Tips / Other Use Cases
+## Tips
 
 To use this plugin for developing other plugins, you can simply source the other
 plugin file(s) in the quick-dev file so that they get reloaded when it does.
