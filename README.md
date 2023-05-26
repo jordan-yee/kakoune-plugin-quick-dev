@@ -3,6 +3,14 @@
 Quickly write and reload kakscript to extend Kakoune's functionality without
 breaking your workflow.
 
+> This relies on you to write kakscript to be reloadable, but I've found that
+> the little bit of discipline and know-how required to do that unlocks a
+> drastically improved development experience.
+
+TODO:
+- [ ] Include examples of how to make different kakscript constructs reloadable
+  for easy reference.
+
 ## Example Usage
 
 (Assuming default mappings...)
@@ -21,8 +29,7 @@ breaking your workflow.
    }
    ```
 3. Add your prototype kakscript, which can be anything that's reloadable, such
-   as `define-command` with an -override flag. An example command definition is
-   given in the scratch file to get you started:
+   as `define-command` with an -override flag:
    ```
    # ------------------------------------------------------------------------------
    # Scratch Space - add your prototype script code here
@@ -64,7 +71,6 @@ recreate it
   - `r` (quick-dev): reload quick-dev script
   - `R` (quick-dev): reset quick-dev script (!destructive!)
 
-
 ## Installation
 
 With `plug.kak`:
@@ -90,6 +96,11 @@ Manual:
 > Currently, this relies on static file path references to the standard plugins
 > directory. You could modify the source fairly easily to accomodate a different
 > setup if needed.
+
+## Tips / Other Use Cases
+
+To use this plugin for developing other plugins, you can simply source the other
+plugin file(s) in the quick-dev file so that they get reloaded when it does.
 
 ## See also
 
