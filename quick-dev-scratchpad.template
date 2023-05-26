@@ -1,8 +1,18 @@
 # ------------------------------------------------------------------------------
-# Scratch Space - add your prototype script code here
+# Examples
 
-# TODO: Modify this function to suit your needs, then reload!
 define-command -override quick-dev-hello-world \
 -docstring 'example quick-dev command' %{
     echo 'hello world!'
 }
+
+# TODO: add examples of other reloadable constructs:
+# - mappings
+# - hooks
+# - modules
+
+# ------------------------------------------------------------------------------
+# Scratch Space - add your prototype script code here
+# IMPORTANT: code added here must be reloadable (re-sourceable)!
+
+

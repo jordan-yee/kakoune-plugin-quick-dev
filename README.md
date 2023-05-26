@@ -1,21 +1,15 @@
 # kakoune-plugin-quick-dev
-Quickly write and reload kakscript to extend Kakoune's functionality without breaking your workflow.
 
-## Installation with plug.kak
-Add the following to your kakrc, then run the `:plug-install` command:
+Quickly write and reload kakscript to extend Kakoune's functionality without
+breaking your workflow.
 
-```
-plug "jordan-yee/kakoune-plugin-quick-dev" config %{
-  quick-dev-register-default-mappings
-}
-```
+## Example Usage
 
-## Usage
-Assuming the default mappings from the above config, and a user-mode mapping of `,`:
+(Assuming default mappings...)
 
-1. You're working away and think, "I should configure kak to do ____, but I don't want
-   to break my workflow to implement it."
-2. Open the quick dev scratch file with `,qe`. This will look like:
+1. You're working away and think, "I should configure kak to do ____, but I
+   don't want to break my workflow to implement it."
+2. Open the quick dev scratch file with `<space>qe`. This will look like:
    ```
    # ------------------------------------------------------------------------------
    # Scratch Space - add your prototype script code here
@@ -26,9 +20,9 @@ Assuming the default mappings from the above config, and a user-mode mapping of 
          echo 'hello world!'
    }
    ```
-3. Add your prototype kakscript. This can be anything that's reloadable, but is
-   generally meant to be new commands with an -override flag. An example command
-   definition is given in the scratch file which can be copied as a template.
+3. Add your prototype kakscript, which can be anything that's reloadable, such
+   as `define-command` with an -override flag. An example command definition is
+   given in the scratch file to get you started:
    ```
    # ------------------------------------------------------------------------------
    # Scratch Space - add your prototype script code here
@@ -38,9 +32,9 @@ Assuming the default mappings from the above config, and a user-mode mapping of 
          echo 'hello world, reloaded!'
    }
    ```
-4. [optional] Go back to the file you were originally working on with `ga`.
-5. Load your prototype kakscript with `,qr`.
-6. Immediately test your changes in the original context from which you had the idea.
+4. (Re-)Load your prototype kakscript with `<space>qr`.
+5. [optional] Go back to the file you were originally working on with `ga`.
+6. Immediately test your changes in the original context in which you had the idea.
    ```
    :quick-dev-hello-world
    # => hello world, reloaded!
@@ -50,3 +44,56 @@ Assuming the default mappings from the above config, and a user-mode mapping of 
 This is meant be an instant feedback cycle for quick prototyping. Once you're
 happy with the new functionality, consider pulling it out of the quick dev
 scratch file and into an actual plugin you can share.
+
+## Commands
+
+`quick-dev-create-scratch-file`: create the quick-dev scratch file if it doesn't
+yet exist
+- This includes some example code & reference links to get you started.
+
+`quick-dev-reset-scratch-file`: delete an existing quick-dev scratch file and
+recreate it
+
+`quick-dev-edit`: edit the quick-dev scratch file
+
+`quick-dev-reload`: reload the quick-dev scratch file
+
+`quick-dev-register-default-mappings`: reload the quick-dev scratch file
+- `q` (user mode): enter quick-dev mode
+  - `e` (quick-dev): edit quick-dev script
+  - `r` (quick-dev): reload quick-dev script
+  - `R` (quick-dev): reset quick-dev script (!destructive!)
+
+
+## Installation
+
+With `plug.kak`:
+```
+# Add the following to your kakrc, then run the `:plug-install` command:
+plug "jordan-yee/kakoune-plugin-quick-dev" config %{
+  quick-dev-register-default-mappings
+}
+```
+
+Manual:
+1. Clone this repo into the standard plugin directory:
+   ```
+   git clone https://github.com/jordan-yee/kakoune-plugin-quick-dev.git ~/.config/kak/plugins/kakoune-plugin-quick-dev
+   ```
+2. Add the following to your kakrc:
+   ```
+   source "%val{config}/plugins/kakoune-plugin-quick-dev/plugin-quick-dev.kak"
+   # Register default mappings OR replace this with your own
+   quick-dev-register-default-mappings
+   ```
+
+> Currently, this relies on static file path references to the standard plugins
+> directory. You could modify the source fairly easily to accomodate a different
+> setup if needed.
+
+## See also
+
+- [Discussion: How to reload config without leaving kakoune](https://discuss.kakoune.com/t/how-to-reload-config-without-leaving-kakoune/1586)
+- TODO: I once saw blog or forum post or something outlining a good set of
+  standards and conventions for Kakoune plugins. I could not find it when
+  looking for it to link here.

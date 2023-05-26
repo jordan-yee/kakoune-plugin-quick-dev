@@ -20,6 +20,18 @@ define-command -override quick-dev-create-scratch-file \
     }
 }
 
+define-command -override quick-dev-reset-scratch-file \
+-docstring "delete an existing quick-dev scratch file and recreate it" %{
+    evaluate-commands %sh{
+        quick_dev_scratchpad_file="$kak_config/plugins/kakoune-plugin-quick-dev/quick-dev-scratchpad.kak"
+        if [ -e "$quick_dev_scratchpad_file" ]; then
+            rm $quick_dev_scratchpad_file
+            printf "%s" "echo -debug 'existing quick-dev scratch file removed'"
+        fi
+    }
+    quick-dev-create-scratch-file
+}
+
 define-command -override quick-dev-edit \
 -docstring 'edit the quick-dev scratch file' %{
     edit "%val{config}/plugins/kakoune-plugin-quick-dev/quick-dev-scratchpad.kak"
@@ -36,6 +48,8 @@ define-command -override quick-dev-register-default-mappings \
     declare-user-mode quick-dev
     map global quick-dev e ": quick-dev-edit<ret>" -docstring 'edit quick-dev script'
     map global quick-dev r ": quick-dev-reload<ret>" -docstring 'reload quick-dev script'
+    map global quick-dev R ": quick-dev-reset-scratch-file<ret>" \
+    -docstring 'reset quick-dev script (!destructive!)'
     map global user q ': enter-user-mode quick-dev<ret>' -docstring 'quick-dev mode'
 }
 
