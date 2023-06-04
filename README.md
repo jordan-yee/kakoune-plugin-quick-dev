@@ -7,9 +7,12 @@ breaking your workflow.
 > the little bit of discipline and know-how required to do that unlocks a
 > drastically improved development experience.
 
-TODO:
-- [ ] Include examples of how to make different kakscript constructs reloadable
-  for easy reference.
+**TODO:**
+- [ ] Separate scratchpad and reference files?
+- [ ] Custom script management
+    - [ ] Export contents of the scratchpad to a new script file
+    - [ ] Add filepaths to a list to quickly open/reload them with quick-dev
+          mappings
 
 ## Commands
 
@@ -36,22 +39,26 @@ recreate it
 
 1. You're working away and think, "I should configure kak to do ____, but I
    don't want to break my workflow to implement it."
-2. Open the quick dev scratch file with `<space>qe`. This will look like:
+2. Open the quick dev scratch file with `<space>qe`. At the bottom, you'll see:
    ```
-   # ------------------------------------------------------------------------------
-   # Scratch Space - add your prototype script code here
+   # ... reference stuff here ...
 
-   # TODO: Modify this function to suit your needs, then reload!
-   define-command -override quick-dev-hello-world \
-   -docstring 'example quick-dev command' %{
-         echo 'hello world!'
-   }
-   ```
-3. Add your prototype kakscript, which can be anything that's reloadable, such
-   as `define-command` with an -override flag:
-   ```
-   # ------------------------------------------------------------------------------
+   # ---------------------------------------------------------------------------
    # Scratch Space - add your prototype script code here
+   # IMPORTANT: code added here must be reloadable (re-sourceable)!
+
+   # define-command -override rename-me \
+   # -docstring '' %{
+   #     fail 'command not implemented'
+   # }
+   ```
+3. Add your prototype kakscript, which can be anything that's reloadable:
+   ```
+   # ... reference stuff here ...
+
+   # ---------------------------------------------------------------------------
+   # Scratch Space - add your prototype script code here
+   # IMPORTANT: code added here must be reloadable (re-sourceable)!
 
    define-command -override quick-dev-hello-world \
    -docstring 'example quick-dev command' %{

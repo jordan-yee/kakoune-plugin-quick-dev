@@ -1,18 +1,100 @@
-# ------------------------------------------------------------------------------
-# Examples
+# This is the Quick-Dev Scratchpad!
+# - Add your code to the Scratch Space at the bottom (gj).
+# - Examples are provided for reference / to copy-paste.
+# - Edit this buffer with `quick-dev-edit` (<space>qe).
+# - Reload kakscript written here with `quick-dev-reload` (<space>qr).
+# - Reset this Scratchpad with `quick-dev-reset-scratch-file` (<space>qR).
+#   - Be sure to save your scripts separately to persist them!
+#     `:w "%val{config}/custom/my-new-plugin.kak"`
+#   - TIP: to continue working on the above file with quick-dev, you can reload
+#     it simply by sourcing it in here:
+#     `source "%val{config}/custom/my-new-plugin.kak"`
 
-define-command -override quick-dev-hello-world \
+# ------------------------------------------------------------------------------
+# Reloadable Examples
+
+# --------------------------------------
+# Modules
+
+# NOTE: For modules, the `-override` switch allows reloading of the
+# `provide-module` block, but once `require-module` is called, it can no longer
+# be reloaded (AFAIK). This is used here to show an example of how modules are
+# defined & used, as well as to prevent the example code from being loaded.
+
+# > To work on the internals of a module w/ quick-dev, just comment it out.
+provide-module -override quick-dev-examples %{
+
+# --------------------------------------
+# Commands
+
+define-command -override example-reloadable-command \
 -docstring 'example quick-dev command' %{
     echo 'hello world!'
 }
 
-# TODO: add examples of other reloadable constructs:
-# - mappings
-# - hooks
-# - modules
+# --------------------------------------
+# Mappings
+
+# TODO: to define your own user-mode, copy this section then select/rename all
+# occurances of 'example-reloadable-user-mode'.
+define-command -override init-example-reloadable-user-mode \
+-docstring 'declare the example-reloadable-user-mode user mode in a reloadable way' %{
+    try %{ declare-user-mode example-reloadable-user-mode }
+    # Ensure old key mappings don't stick around if you change mapped keys.
+    unmap global example-reloadable-user-mode
+}
+
+define-command -override register-default-example-reloadable-user-mode-mappings \
+-docstring 'register default mappings for example-reloadable-user-mode' %{
+    map global example-reloadable-user-mode h ": echo 'hello world!'<ret>" \
+    -docstring 'print hello message'
+}
+
+# You'd call these from your kakrc when finished quick-dev'ing:
+init-example-reloadable-user-mode
+register-default-example-reloadable-user-mode-mappings
+# map global user r ": enter-user-mode example-reloadable-user-mode" \
+# -docstring 'Activate example-reloadable-user-mode'
+
+# --------------------------------------
+# Hooks
+
+# Ensure you don't just keep adding new hooks.
+remove-hooks global quick-dev
+hook -group quick-dev global ModeChange (push|pop):.*:.* %{
+    echo -debug 'hook_param: ' %sh{ echo "$kak_hook_param" }
+    echo -debug 'hook_param_capture: ' %sh{ echo "$kak_hook_param_capture_0" }
+    # From `:doc hooks`:
+    # kak_hook_param_capture_N: text captured by the hook filter regex
+    # capturing group N, N can either be the capturing group number, or its
+    # name
+}
+
+} # end `quick-dev-examples` module
+# NOTE: `require-module` is not a reloadable call (see comment by provide...)
+# require-module quick-dev-examples
+
+# ------------------------------------------------------------------------------
+# Other Examples
+
+declare-option bool mybool false
+# set-option global mybool true
+define-command -override example-if-option \
+-docstring 'example if statement that branches on an option' %{
+    evaluate-commands %sh{
+        if $kak_opt_mybool; then
+            printf '%s\n' "echo 'true'"
+        else
+            printf '%s\n' "echo 'false'"
+        fi
+    }
+}
 
 # ------------------------------------------------------------------------------
 # Scratch Space - add your prototype script code here
 # IMPORTANT: code added here must be reloadable (re-sourceable)!
 
-
+# define-command -override rename-me \
+# -docstring '' %{
+#     fail 'command not implemented'
+# }
