@@ -8,6 +8,9 @@ breaking your workflow.
 > drastically improved development experience.
 
 **TODO:**
+- [ ] Figure out how to reference the scratch file paths in a way that works
+      when loading the plugin from a local path. Currently, the paths assume
+      the plugin was installed in the default `plug.kak` directory.
 - [ ] Separate scratchpad and reference files?
 - [ ] Custom script management
     - [ ] Export contents of the scratchpad to a new script file
@@ -29,9 +32,9 @@ recreate it
 
 `quick-dev-register-default-mappings`: reload the quick-dev scratch file
 - `q` (user mode): enter quick-dev mode
-  - `e` (quick-dev): edit quick-dev script
-  - `r` (quick-dev): reload quick-dev script
-  - `R` (quick-dev): reset quick-dev script (!destructive!)
+  - `e` (quick-dev): edit quick-dev scratchpad
+  - `r` (quick-dev): reload quick-dev scratchpad
+  - `R` (quick-dev): reset quick-dev scratchpad (!destructive!)
 
 ## Example Usage
 
@@ -84,7 +87,10 @@ With `plug.kak`:
 ```
 # Add the following to your kakrc, then run the `:plug-install` command:
 plug "jordan-yee/kakoune-plugin-quick-dev" config %{
+  quick-dev-mode-init
+  # Register default mappings OR replace these with your own
   quick-dev-register-default-mappings
+  map global user q ': enter-user-mode quick-dev<ret>' -docstring 'quick-dev mode'
 }
 ```
 
@@ -95,19 +101,17 @@ Manual:
    ```
 2. Add the following to your kakrc:
    ```
+   # Quick-Dev Plugin
    source "%val{config}/plugins/kakoune-plugin-quick-dev/plugin-quick-dev.kak"
-   # Register default mappings OR replace this with your own
+   quick-dev-mode-init
+   # Register default mappings OR replace these with your own
    quick-dev-register-default-mappings
+   map global user q ': enter-user-mode quick-dev<ret>' -docstring 'quick-dev mode'
    ```
 
 > Currently, this relies on static file path references to the standard plugins
 > directory. You could modify the source fairly easily to accomodate a different
 > setup if needed.
-
-## Tips
-
-To use this plugin for developing other plugins, you can simply source the other
-plugin file(s) in the quick-dev file so that they get reloaded when it does.
 
 ## See also
 
