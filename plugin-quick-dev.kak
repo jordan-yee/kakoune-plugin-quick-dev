@@ -2,14 +2,12 @@
 # PLUGIN QUICK DEV
 # a scratch space for writing easily reloadable kakscript
 
+declare-option -hidden str quick_dev_plugin_directory %val{source}
+
 define-command -override quick-dev-create-scratch-file \
 -docstring "create the quick-dev scratchpad if it doesn't yet exist" %{
     evaluate-commands %sh{
-        if [ -n "$kak_source" ]; then
-            plugin_dir="$(dirname $kak_source)"
-        else
-            plugin_dir="$kak_config/plugins/kakoune-plugin-quick-dev"
-        fi
+        plugin_dir="$(dirname $kak_opt_quick_dev_plugin_directory)"
         quick_dev_scratchpad_file="$plugin_dir/quick-dev-scratchpad.kak"
         quick_dev_scratchpad_template_file="$plugin_dir/quick-dev-scratchpad.template"
         if [ -e "$quick_dev_scratchpad_file" ]; then
@@ -24,11 +22,7 @@ define-command -override quick-dev-create-scratch-file \
 define-command -override quick-dev-reset-scratch-file \
 -docstring "delete the quick-dev scratchpad and recreate it" %{
     evaluate-commands %sh{
-        if [ -n "$kak_source" ]; then
-            plugin_dir="$(dirname $kak_source)"
-        else
-            plugin_dir="$kak_config/plugins/kakoune-plugin-quick-dev"
-        fi
+        plugin_dir="$(dirname $kak_opt_quick_dev_plugin_directory)"
         quick_dev_scratchpad_file="$plugin_dir/quick-dev-scratchpad.kak"
         if [ -e "$quick_dev_scratchpad_file" ]; then
             rm $quick_dev_scratchpad_file
@@ -41,11 +35,7 @@ define-command -override quick-dev-reset-scratch-file \
 define-command -override quick-dev-edit \
 -docstring 'edit the quick-dev scratchpad' %{
     evaluate-commands %sh{
-        if [ -n "$kak_source" ]; then
-            plugin_dir="$(dirname $kak_source)"
-        else
-            plugin_dir="$kak_config/plugins/kakoune-plugin-quick-dev"
-        fi
+        plugin_dir="$(dirname $kak_opt_quick_dev_plugin_directory)"
         quick_dev_scratchpad_file="$plugin_dir/quick-dev-scratchpad.kak"
         printf "edit '%s'" "$quick_dev_scratchpad_file"
     }
@@ -54,11 +44,7 @@ define-command -override quick-dev-edit \
 define-command -override quick-dev-reload \
 -docstring 'reload the quick-dev scratchpad' %{
     evaluate-commands %sh{
-        if [ -n "$kak_source" ]; then
-            plugin_dir="$(dirname $kak_source)"
-        else
-            plugin_dir="$kak_config/plugins/kakoune-plugin-quick-dev"
-        fi
+        plugin_dir="$(dirname $kak_opt_quick_dev_plugin_directory)"
         quick_dev_scratchpad_file="$plugin_dir/quick-dev-scratchpad.kak"
         printf "source '%s'" "$quick_dev_scratchpad_file"
     }
