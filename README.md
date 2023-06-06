@@ -8,9 +8,6 @@ breaking your workflow.
 > drastically improved development experience.
 
 **TODO:**
-- [ ] Figure out how to reference the scratch file paths in a way that works
-      when loading the plugin from a local path. Currently, the paths assume
-      the plugin was installed in the default `plug.kak` directory.
 - [ ] Separate scratchpad and reference files?
 - [ ] Custom script management
     - [ ] Export contents of the scratchpad to a new script file
@@ -19,8 +16,8 @@ breaking your workflow.
 
 ## Commands
 
-`quick-dev-create-scratch-file`: create the quick-dev scratch file if it doesn't
-yet exist
+`quick-dev-create-scratch-file`: create the quick-dev scratch file if it
+doesn't yet exist
 - This includes some example code & reference links to get you started.
 
 `quick-dev-reset-scratch-file`: delete an existing quick-dev scratch file and
@@ -70,7 +67,8 @@ recreate it
    ```
 4. (Re-)Load your prototype kakscript with `<space>qr`.
 5. [optional] Go back to the file you were originally working on with `ga`.
-6. Immediately test your changes in the original context in which you had the idea.
+6. Immediately test your changes in the original context in which you had the
+   idea.
    ```
    :quick-dev-hello-world
    # => hello world, reloaded!
@@ -95,23 +93,21 @@ plug "jordan-yee/kakoune-plugin-quick-dev" config %{
 ```
 
 Manual:
-1. Clone this repo into the standard plugin directory:
+1. Clone this repo locally:
    ```
+   # you can change the target if you want
    git clone https://github.com/jordan-yee/kakoune-plugin-quick-dev.git ~/.config/kak/plugins/kakoune-plugin-quick-dev
    ```
 2. Add the following to your kakrc:
    ```
    # Quick-Dev Plugin
+   # TODO: ensure this matches the path you cloned it to
    source "%val{config}/plugins/kakoune-plugin-quick-dev/plugin-quick-dev.kak"
    quick-dev-mode-init
    # Register default mappings OR replace these with your own
    quick-dev-register-default-mappings
    map global user q ': enter-user-mode quick-dev<ret>' -docstring 'quick-dev mode'
    ```
-
-> Currently, this relies on static file path references to the standard plugins
-> directory. You could modify the source fairly easily to accomodate a different
-> setup if needed.
 
 ## See also
 
